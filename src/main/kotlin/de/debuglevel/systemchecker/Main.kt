@@ -26,7 +26,10 @@ fun checkWebcam(webcam: Webcam): Boolean {
 }
 
 fun main(args: Array<String>) {
-    val webcams = Webcam.getWebcams()
+    val webcams = Webcam.getWebcams().filterNot { webcam ->
+        listOf("screen-capture-recorder").any { brokenDevice -> webcam.name.contains(brokenDevice) }
+    }
+
     for (webcam in webcams) {
         print("Checking webcam ${webcam.name}... ")
         val works = checkWebcam(webcam)
